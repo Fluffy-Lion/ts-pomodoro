@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet"/>
+    <title>pomodoro</title>
+  </head>
+  <body>
+    <main class="app">
+        <progress id="progress" value="0"></progress>
+        <div class="progress-bar"></div>
+        <div class="timer">
+          <div class="button-group mode-buttons" id="mode-buttons">
+            <button
+              data-mode="pomodoro"
+              class="button active mode-button"
+              id="pomodoro"
+            >
+              Pomodoro
+            </button>
+            <button
+              data-mode="shortBreak"
+              class="button mode-button"
+              id="short-break"
+            >
+              Short break
+            </button>
+            <button
+              data-mode="longBreak"
+              class="button mode-button"
+              id="long-break"
+            >
+              Long break
+            </button>
+          </div>
+          <div class="clock" id="js-clock">
+            <span id="minutes">25</span>
+            <span class="separator">:</span>
+            <span id="seconds">00</span>
+          </div>
+          <button class="main-button" data-action="start" id="btn">
+            Start
+          </button>
+        </div>
+      </main>
+    <script src="script.js"></script>
+  <audio src="sounds/notification.mp3" id="sound"></audio>
+  </body>
+</html>
