@@ -41,9 +41,9 @@ let interval: ReturnType <typeof setInterval>;
 getRemainingTime = (endTime) => {
   // taking the endtime and subtracting the current to leave
   // with the time remaining for the countdown
-  let newDate = new Date();
-  let currentTime = newDate.getTime();
-  let difference = endTime - currentTime;
+  const newDate = new Date();
+  const currentTime = newDate.getTime();
+  const difference = endTime - currentTime;
   // parseInt takes a string argument
   // last argument is radix of 10, converts from a decimal number
   const total = Number.parseInt(String(difference / 1000), 10);
