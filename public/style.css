@@ -9,9 +9,9 @@ html {
   }
   
   :root {
-    --pomodoro: hsl(223, 25%, 40%);
-    --shortBreak: hsl(48, 23%, 40%);
-    --longBreak: hsl(105, 16%, 40%);
+    --pomodoro: #e63946;
+    --shortBreak: #457b9d;
+    --longBreak: #1d3557;
   }
   
   body {
@@ -34,7 +34,7 @@ html {
   }
   
   progress::-webkit-progress-value {
-    background-color: #fff;
+    background-color: #f1faee;
   }
   
   .timer {
@@ -62,7 +62,7 @@ html {
     cursor: pointer;
     box-shadow: none;
     font-weight: 300;
-    color: #fff;
+    color: #f1faee;
     border: 1px solid transparent;
     margin: 0px;
     border-radius: 4px;
@@ -71,19 +71,19 @@ html {
   }
   
   .mode-button.active {
-    border-color: #fff;
+    border-color: #a8dadc;
   }
   
   .main-button {
     cursor: pointer;
-    box-shadow: rgb(235, 235, 235) 0px 6px 0px;
+    box-shadow: #a8dadc 0px 6px 0px;
     font-size: 22px;
     height: 55px;
     text-transform: uppercase;
-    color: hsl(175, 26%, 41%);
+    color: #457b9d;
     font-weight: bold;
     width: 200px;
-    background-color: white;
+    background-color: #f1faee;
     border-width: initial;
     border-style: none;
     margin: 20px 0px 0px;

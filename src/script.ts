@@ -16,10 +16,29 @@ timer = {
   longBreakInterval: 4,
   sessions: 0,
 };
-
-let interval: number = <any>setInterval(() => {});
-
+const timerDisplay = document.querySelector(
+  "#timerDisplay"
+) as HTMLParagraphElement;
+const mainButton = document.getElementById("btn") as HTMLButtonElement;
+// once main button clicked, the data-action attribute is stored in
+// the action variable to check it is equal to start
+mainButton.addEventListener("click", () => {
+  const { action } = mainButton.dataset;
+  if (action === "start") {
+    startTimer();
+  } else {
+    stopTimer();
+  }
+});
 let getRemainingTime: (a: number) => object;
+let startTimer: () => void;
+let stopTimer: () => void;
+let updateClock: () => void;
+let handleMode: (e: Event) => void;
+let switchMode: (a: string) => void;
+// let interval: number = <any>setInterval(() => {});
+let interval: ReturnType <typeof setInterval>;
+
 getRemainingTime = (endTime) => {
   // taking the endtime and subtracting the current to leave
   // with the time remaining for the countdown
@@ -38,8 +57,7 @@ getRemainingTime = (endTime) => {
     seconds,
   };
 };
-
-let startTimer = () => {
+startTimer = () => {
   let { total } = timer.remainingTime;
   let newDate = new Date();
   let date = newDate.getTime();
@@ -48,7 +66,6 @@ let startTimer = () => {
   // when its gets to 4 will trigger long break
   if (timer.mode === "pomodoro") timer.sessions++;
   let endTime = date + total * 1000;
-  console.log(date - old);
   // changing the button action to stop, changing text content
   // and adding active class
   mainButton.dataset.action = "stop";
@@ -66,12 +83,11 @@ let startTimer = () => {
     total = timer.remainingTime.total;
     if (total <= 0) {
       clearInterval(interval);
-
       switch (timer.mode) {
         case "pomodoro":
-            // is timer sessions is divisible by 4 with a remainder of 0
-            // then switchmode has argument 'longbreak'
-            // other wise short break is triggered
+          // is timer sessions is divisible by 4 with a remainder of 0
+          // then switchmode has argument 'longbreak'
+          // other wise short break is triggered
           if (timer.sessions % timer.longBreakInterval === 0) {
             switchMode("longBreak");
           } else {
@@ -81,36 +97,21 @@ let startTimer = () => {
         default:
           switchMode("pomodoro");
       }
-      let sound = document.getElementById("sound") as HTMLAudioElement
-      sound.play()
-      startTimer()
+      let sound = document.getElementById("sound") as HTMLAudioElement;
+      sound.play();
+      startTimer();
     }
   }, 1000);
 };
 
-const mainButton = document.getElementById("btn") as HTMLButtonElement;
-// once main button clicked, the data-action attribute is stored in
-// the action variable to check it is equal to start
-mainButton.addEventListener("click", () => {
-  const { action } = mainButton.dataset;
-  if (action === "start") {
-    startTimer();
-  } else {
-    stopTimer();
-  }
-});
-const stopTimer = () => {
+stopTimer = () => {
   clearInterval(interval);
   mainButton.dataset.action = "start";
   mainButton.textContent = "start";
   mainButton.classList.remove("active");
 };
 
-const modeButtons = document.querySelector(
-  "#mode-buttons"
-) as HTMLButtonElement;
-
-const updateClock = () => {
+updateClock = () => {
   const { remainingTime } = timer;
   // had to change version on JS to ES2017 to use padStart
   // pad start passes current string with another
@@ -122,17 +123,20 @@ const updateClock = () => {
   const sec = document.getElementById("seconds") as HTMLSpanElement;
   min.textContent = minutes;
   sec.textContent = seconds;
-  console.log("minutes: ", remainingTime.minutes)
-  console.log("seconds: ", remainingTime.seconds)
-  const text = timer.mode === 'pomodoro' ? 'get back to work' : 'time to take a break'
-  document.title = `${minutes}:${seconds} - ${text}`
-  let progress = document.getElementById("progress") as HTMLProgressElement
+  console.log("minutes: ", remainingTime.minutes);
+  console.log("seconds: ", remainingTime.seconds);
+  const text =
+    timer.mode === "pomodoro" ? "get back to work" : "time to take a break";
+  document.title = `${minutes}:${seconds} - ${text}`;
+  let progress = document.getElementById("progress") as HTMLProgressElement;
 
   // typeof give the type { timer object }
-  // keyof literal type union 
-  progress.value = timer[timer.mode as keyof typeof timer] * 60 - timer.remainingTime.total
+  // keyof literal type union
+  progress.value =
+    timer[timer.mode as keyof typeof timer] * 60 - timer.remainingTime.total;
 };
-const switchMode = (mode: string) => {
+
+switchMode = (mode) => {
   // updating the mode and remaining time property
   timer.mode = mode;
   timer.remainingTime = {
@@ -151,13 +155,13 @@ const switchMode = (mode: string) => {
   document.querySelector(`[data-mode="${mode}"]`)?.classList.add("active");
   // css custom properties
   document.body.style.backgroundColor = `var(--${timer.mode})`;
-  let progress = document.getElementById("progress") as HTMLProgressElement
-  progress.setAttribute('max', timer.remainingTime.total)
+  let progress = document.getElementById("progress") as HTMLProgressElement;
+  progress.setAttribute("max", timer.remainingTime.total);
 
   updateClock();
 };
 
-const handleMode = (e: Event) => {
+handleMode = (e) => {
   // have to specify that its an element
   // detecting a click on any of the buttons
   const target = e.target as HTMLButtonElement;
@@ -169,11 +173,10 @@ const handleMode = (e: Event) => {
   switchMode(mode);
   stopTimer();
 };
+const modeButtons = document.querySelector(
+  "#mode-buttons"
+) as HTMLButtonElement;
 modeButtons.addEventListener("click", handleMode);
-const timerDisplay = document.querySelector(
-  "#timerDisplay"
-) as HTMLParagraphElement;
-// const startTimer = document.querySelector("#startTimer") as HTMLButtonElement;
 
 // console.log(timer);
 //added at the start so it has pomodoro as first value
