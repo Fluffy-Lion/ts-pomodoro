@@ -36,7 +36,6 @@ let stopTimer: () => void;
 let updateClock: () => void;
 let handleMode: (e: Event) => void;
 let switchMode: (a: string) => void;
-// let interval: number = <any>setInterval(() => {});
 let interval: ReturnType <typeof setInterval>;
 
 getRemainingTime = (endTime) => {
@@ -44,7 +43,7 @@ getRemainingTime = (endTime) => {
   // with the time remaining for the countdown
   let newDate = new Date();
   let currentTime = newDate.getTime();
-  const difference = endTime - currentTime;
+  let difference = endTime - currentTime;
   // parseInt takes a string argument
   // last argument is radix of 10, converts from a decimal number
   const total = Number.parseInt(String(difference / 1000), 10);
@@ -155,6 +154,7 @@ switchMode = (mode) => {
   document.querySelector(`[data-mode="${mode}"]`)?.classList.add("active");
   // css custom properties
   document.body.style.backgroundColor = `var(--${timer.mode})`;
+
   let progress = document.getElementById("progress") as HTMLProgressElement;
   progress.setAttribute("max", timer.remainingTime.total);
 

@@ -1,113 +1,131 @@
 html {
-    box-sizing: border-box;
-  }
-  
-  *, *::before, *::after {
-    box-sizing: inherit;
-    margin: 0;
-    padding: 0;
-  }
-  
-  :root {
-    --pomodoro: #e63946;
-    --shortBreak: #457b9d;
-    --longBreak: #1d3557;
-  }
-  
-  body {
-    background-color: var(--pomodoro);
-    transition: background-color 1s ease;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    user-select: none;
-  }
-  
-  progress {
-    border-radius: 2px;
-    width: 100%;
-    height: 12px;
-    position: fixed;
-    top: 0;
-  }
-  
-  progress::-webkit-progress-bar {
-   background-color: rgba(0, 0, 0, 0.1);;
-  }
-  
-  progress::-webkit-progress-value {
-    background-color: #f1faee;
-  }
-  
-  .timer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    text-align: center;
-  }
-  
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --pomodoro: rgba(230, 57, 71);
+  --shortBreak: rgb(69, 123, 157);
+  --longBreak: rgb(29, 53, 87);
+}
+
+body {
+  background: linear-gradient( transparent 60%, rgb(241, 250, 238)),
+    url('https://grainy-gradients.vercel.app/noise.svg');
+  background-color: var(--pomodoro);
+  transition: background-color 1s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  user-select: none;
+  width: 100vw;
+height: 100vh;
+}
+
+progress {
+  border-radius: 2px;
+  width: 100%;
+  height: 12px;
+  position: fixed;
+  top: 0;
+}
+.noise {
+  /* border: solid 3px black; */
+  /* background-color: rgba(242, 250, 239, 0.513); */
+  backdrop-filter: blur(1px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgb(241, 250, 238);
+  /* background: linear-gradient( rgba(0, 0, 255, 0.97), rgb(241, 250, 238)),
+    url('https://grainy-gradients.vercel.app/noise.svg'); */
+}
+
+progress::-webkit-progress-bar {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+progress::-webkit-progress-value {
+  background-color: rgb(241, 250, 238);
+}
+
+.timer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  text-align: center;
+}
+
+.clock {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  font-size: 15rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  font-family: arial, sans-serif;
+}
+
+.mode-button {
+  font-size: 16px;
+  height: 28px;
+  cursor: pointer;
+  box-shadow: none;
+  font-weight: 300;
+  color: #f1faee;
+  border: 1px solid transparent;
+  margin: 0px;
+  border-radius: 4px;
+  padding: 2px 12px;
+  background: none;
+}
+
+.mode-button.active {
+  border-color: #a8dadc;
+}
+
+.main-button {
+  cursor: pointer;
+  box-shadow: #a8dadc 0px 6px 0px;
+  font-size: 22px;
+  height: 55px;
+  text-transform: uppercase;
+  color: #457b9d;
+  font-weight: bold;
+  width: 200px;
+  background-color: #f1faee;
+  border-width: initial;
+  border-style: none;
+  margin: 20px 0px 0px;
+  padding: 0px 12px;
+  border-radius: 4px;
+  transition: color 0.5s ease-in-out 0s;
+}
+
+button:focus,
+button:active {
+  outline: none;
+}
+
+.main-button.active {
+  transform: translateY(6px);
+  box-shadow: none;
+  outline: none;
+}
+
+.hidden {
+  display: none;
+}
+
+@media screen and (max-width: 550px) {
   .clock {
-    margin-top: 50px;
-    margin-bottom: 30px;
-    font-size: 15rem;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    font-family: arial, sans-serif;
+    font-size: 8rem;
   }
-  
-  .mode-button {
-    font-size: 16px;
-    height: 28px;
-    cursor: pointer;
-    box-shadow: none;
-    font-weight: 300;
-    color: #f1faee;
-    border: 1px solid transparent;
-    margin: 0px;
-    border-radius: 4px;
-    padding: 2px 12px;
-    background: none;
-  }
-  
-  .mode-button.active {
-    border-color: #a8dadc;
-  }
-  
-  .main-button {
-    cursor: pointer;
-    box-shadow: #a8dadc 0px 6px 0px;
-    font-size: 22px;
-    height: 55px;
-    text-transform: uppercase;
-    color: #457b9d;
-    font-weight: bold;
-    width: 200px;
-    background-color: #f1faee;
-    border-width: initial;
-    border-style: none;
-    margin: 20px 0px 0px;
-    padding: 0px 12px;
-    border-radius: 4px;
-    transition: color 0.5s ease-in-out 0s;
-  }
-  
-  button:focus, button:active {
-    outline: none;
-  }
-  
-  .main-button.active {
-    transform: translateY(6px);
-    box-shadow: none;
-    outline: none;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  @media screen and (max-width: 550px) {
-    .clock {
-      font-size: 8rem;
-    }
-  }
+}
